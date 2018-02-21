@@ -19,8 +19,8 @@ public interface MysqlConn {
     
      public static Connection getConn() throws SQLException{
         Connection conn=null;
-        //conn=DriverManager.getConnection("jdbc:mysql://localhost/cristotube", "testpsp" , "@,2,golfoPSP123abcd!");
-        conn=DriverManager.getConnection("jdbc:mysql://localhost/cristotube", "root" , "");
+       conn=DriverManager.getConnection("jdbc:mysql://52.19.19.65/cristotube", "testpsp" , "@,2,golfoPSP123abcd!");
+        //conn=DriverManager.getConnection("jdbc:mysql://localhost/cristotube", "root" , "");
         return conn;
     }
 }
