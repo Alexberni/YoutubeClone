@@ -64,8 +64,8 @@ public class Controller {
         dialog2.main();
         Video video = new Video(dialog.data, dialog2.data, ruta); 
         UploadVideo up = new UploadVideo(video, tempFile.length(), tempFile, this.con.user);
-        up.thr.start();
-        //con.uploadVideo(video, tempFile.length(), tempFile);
+        //up.thr.start();
+        con.uploadVideo(video, tempFile.length(), tempFile);
     }
     
     public void loadVideo(int id) {
