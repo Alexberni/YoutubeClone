@@ -180,7 +180,7 @@ public class ConnectedTransmision implements Runnable{
     }
     
     private void connectSocket(){
-        String hostName = "localhost";//"59.19.19.65"
+        String hostName = "59.19.19.65";//"59.19.19.65"
         int portNumber = 4444;
         try {
             this.kkSocket = new Socket(hostName, portNumber);
