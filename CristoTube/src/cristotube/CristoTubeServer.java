@@ -31,12 +31,32 @@ public class CristoTubeServer extends Thread{
         try {
             this.serverSocket = new ServerSocket(this.port);
             while (this.listening) {
-               this.clients.add(new ServerThread(serverSocket.accept(), this.clients));
-               this.clients.get(this.clients.size()-1).start();
+                this.clients.add(new ServerThread(serverSocket.accept(), this));
+                this.serverAdd();
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port " + this.port);
             System.exit(-1);
         }
     }
+    
+    public synchronized void serverAdd() throws IOException {
+        this.clients.get(this.clients.size()-1).start();
+    }
+    
+    public synchronized void serverDelete(ServerThread client) throws IOException {
+        this.clients.remove(client);
+    }
+    
+    public synchronized void serverCutStream(String idVideo) throws IOException {
+        for(ServerThread client : this.clients){
+            client.out2.println("PROTOCOLCRISTOTUBE1.0#BROADCAST#" + idVideo + "#DELETED");
+            if(client.ctp.idVideoSending == Integer.parseInt(idVideo)){
+                System.out.println("holaa");
+                client.socket.close();
+                clients.remove(client);
+            }
+        }
+    }
+    
 }

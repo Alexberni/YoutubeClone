@@ -16,11 +16,11 @@ public class CristoTubeProtocol {
     private PrintWriter out;
     private BufferedReader in;
     public Usuario currentUser = new Usuario();
+    private CristoTubeServer server;
     public Socket socket;
     public int idVideoSending = -4;
-    public CristoTubeProtocol(Controller controller, Socket socket) throws IOException{
-        this.out = out;
-        this.in = in;
+    public CristoTubeProtocol(Controller controller, Socket socket, CristoTubeServer server) throws IOException{
+        this.server = server;
         this.controller = controller;
         this.socket = socket;       
         this.out = new PrintWriter(socket.getOutputStream(), true);
@@ -61,13 +61,7 @@ public class CristoTubeProtocol {
             
             else if(parts[1].equals("DELETE_VIDEO")){     
                     this.controller.deleteVideo(Integer.parseInt(parts[2]));
-                    for(ServerThread client : this.controller.clients){
-                        client.out2.println("PROTOCOLCRISTOTUBE1.0#BROADCAST#" + parts[2] + "#DELETED");
-                        if(client.ctp.idVideoSending == Integer.parseInt(parts[2])){
-                            System.out.println("holaa");
-                            client.socket.close();
-                        }
-                    }
+                    this.server.serverCutStream(parts[2]);
                     theOutput = "vacio";
                 }           
             
@@ -99,7 +93,7 @@ public class CristoTubeProtocol {
                     }
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("No se encuentra el archivo de video");
                 }
                 idVideoSending = -4;                
                 inputStream.close();
@@ -109,6 +103,7 @@ public class CristoTubeProtocol {
             else if(parts[1].equals("VIDEO_UP")){
                 this.currentUser = this.controller.getCurrentUser(parts[5]);
                 theOutput = "vacio"; //Esto es solo para mi, no se envia.
+                this.controller.uploadVideo(parts[6], parts[7], "users/" + this.currentUser.getId() + "/videos/" + parts[6] + ".mp4", this.currentUser.getId());
                 out.println("PROTOCOLCRISTOTUBE1.0#OK#VIDEO_UP#PREPARED_TO_RECEIVE#" + parts[2]);                 
                 int length = Integer.parseInt(parts[2]);                   
                 String[] parts2 = theInput.split("#");               
@@ -142,7 +137,7 @@ public class CristoTubeProtocol {
                     System.out.println("Video Transmitido Satisfactoriamente");
                 } catch (Exception e) {
                 }           
-                this.controller.uploadVideo(parts[6], parts[7], "users/" + this.currentUser.getId() + "/videos/" + parts[6] + ".mp4", this.currentUser.getId());
+                
             }
             
             

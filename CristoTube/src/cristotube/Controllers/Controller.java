@@ -28,14 +28,11 @@ public class Controller {
     private Connection conn;
     String[] logedData = new String[5];
     public Usuario user = new Usuario();
-    public ArrayList<ServerThread> clients;
     
-    public Controller(ArrayList<ServerThread> clients){
-        this.clients = clients;
+    public Controller(){
     }
     
     public boolean registerUser(String cadena){
-        //RECONSTRUIR CON HIBERNATE PARA USAR EL MODELO EN LA INSERCCION
         boolean registered = false;
         Statement stmt= null;         
         String[] parts=cadena.split("#");

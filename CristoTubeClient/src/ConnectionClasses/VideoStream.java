@@ -102,51 +102,55 @@ public class VideoStream implements Runnable{
                         fromServer = in.readLine();
                         
                         System.out.println(fromServer);
-                        
-                        fromServerCut = fromServer.split("#");
-                        byte[] bytes;
-                        byte[] total_bytes;
-                        boolean exit = true;
-                        int j = 0;
-                        File file = new File("users/" + this.user + "/videos/" + new Date().getTime()/60 + ".mp4");
-                        FileOutputStream outp = new FileOutputStream(file);
-                        //ByteArrayOutputStream output = new ByteArrayOutputStream(); 
-                        do{
-                            System.out.println(fromServer);
-                            if(!fromServerCut[3].equals("DELETE")){
-                                String encoded = fromServerCut[3];
-                                bytes = java.util.Base64.getDecoder().decode(encoded.getBytes()); 
-                                //output.write(bytes);
-                                outp.write(bytes);
-                                //System.out.println(file.length() +"   "+ length_total);
-                                if(file.length() >= length_total){
-                                    exit = false;
-                                } 
+                        try{
+                            fromServerCut = fromServer.split("#");
+                            byte[] bytes;
+                            byte[] total_bytes;
+                            boolean exit = true;
+                            int j = 0;
+                            File file = new File("users/" + this.user + "/videos/" + new Date().getTime()/60 + ".mp4");
+                            FileOutputStream outp = new FileOutputStream(file);
+                            //ByteArrayOutputStream output = new ByteArrayOutputStream(); 
+                            do{
+                                System.out.println(fromServer);
+                                if(!fromServerCut[3].equals("DELETE")){
+                                    String encoded = fromServerCut[3];
+                                    bytes = java.util.Base64.getDecoder().decode(encoded.getBytes()); 
+                                    //output.write(bytes);
+                                    outp.write(bytes);
+                                    //System.out.println(file.length() +"   "+ length_total);
+                                    if(file.length() >= length_total){
+                                        exit = false;
+                                    } 
+                                    else{
+                                        fromServer = in.readLine();  
+                                        fromServerCut = fromServer.split("#");
+                                    }
+                                    if (j == length){
+                                        ReproductorVideoGUI repro = new ReproductorVideoGUI(file);
+                                        repro.show();
+                                    }
+                                    j++;
+                                    //this.thr.sleep(30);
+                                    //total_bytes = output.toByteArray();
+                                    //outp.write(total_bytes);
+                                }
                                 else{
-                                    fromServer = in.readLine();  
-                                    fromServerCut = fromServer.split("#");
+                                    exit = false;
+                                    this.controller.updateVideoTable(videos);
+                                    out.println("PROTOCOLCRISTOTUBE1.0#" + this.user + "#DELETE#" + fromServerCut[2] + "#BROADCASTING#OK");
                                 }
-                                if (j == length){
-                                    ReproductorVideoGUI repro = new ReproductorVideoGUI(file);
-                                    repro.show();
-                                }
-                                j++;
-                                //this.thr.sleep(30);
+                                }while(exit);                                  
+                            try {      
                                 //total_bytes = output.toByteArray();
                                 //outp.write(total_bytes);
-                            }
-                            else{
-                                exit = false;
-                                this.controller.updateVideoTable(videos);
-                                out.println("PROTOCOLCRISTOTUBE1.0#" + this.user + "#DELETE#" + fromServerCut[2] + "#BROADCASTING#OK");
-                            }
-                        }while(exit);                                  
-                        try {      
-                            //total_bytes = output.toByteArray();
-                            //outp.write(total_bytes);
-                            outp.close();
-                            System.out.println("Video Transmitido Satisfactoriamente");
-                        } catch (Exception e) {}
+                                outp.close();
+                                System.out.println("Video Transmitido Satisfactoriamente");
+                            } catch (Exception e) {}
+                        }
+                        catch(Exception e){
+                            System.out.println("Fichero de video no encontrado");
+                        }
                 } 
                 //}                                                                      
             }
@@ -171,44 +175,8 @@ public class VideoStream implements Runnable{
         }
     }
     
-     public void uploadVideo(Video video, long total_size, File tempFile){
-        try {
-            PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-            new InputStreamReader(kkSocket.getInputStream()));
-            out.println("PROTOCOLCRISTOTUBE1.0#VIDEO_UP#" + total_size + "#" + 1024 + "#METADATOS_VIDEO#" + this.user + "#"+ video.getTitle() + "#" + video.getDesc());           
-            //String fromServer = in.readLine();           
-            String encodedString = null;
-            InputStream inputStream = null;
-            try {
-                inputStream = new FileInputStream(tempFile);
-            } catch (Exception e) {
-            }
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            try {
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    output.write(buffer);
-                    encodedString = Base64.getEncoder().encodeToString(buffer);
-                    out.println("PROTOCOLCRISTOTUBE1.0#OK#" + encodedString);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }                
-            inputStream.close();
-            System.out.println("Video Transmitido Satisfactoriamente");
-            
-            
-            
-        } catch (IOException ex) {
-            Logger.getLogger(ConnectedTransmision.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     private void connectSocket(){
-        String hostName = "52.19.19.65";
+        String hostName = "localhost";
         int portNumber = 4444;
         try {
             this.kkSocket = new Socket(hostName, portNumber);

@@ -22,7 +22,7 @@ public class LoginGUI extends javax.swing.JFrame {
     public LoginGUI() {
         this.setUndecorated(true);
         initComponents();
-        this.setBackground(new Color(0,0,0,0));
+        this.setBackground(new Color(0,0,0,0));   
         OutPutGUI debugConsole = new OutPutGUI();
         debugConsole.show();
     }
@@ -44,7 +44,12 @@ public class LoginGUI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        adress = new javax.swing.JTextField();
+        portText = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        loginText1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -52,7 +57,7 @@ public class LoginGUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         loginText.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
-        getContentPane().add(loginText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 120, 30));
+        getContentPane().add(loginText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, 120, 30));
 
         loginButton.setText("Login");
         loginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -62,12 +67,12 @@ public class LoginGUI extends javax.swing.JFrame {
                 loginButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 420, 124, 30));
+        getContentPane().add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, 124, 30));
 
         connectionLabel.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         connectionLabel.setForeground(new java.awt.Color(102, 255, 102));
-        getContentPane().add(connectionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 220, 50));
-        getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 124, 30));
+        getContentPane().add(connectionLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 360, 220, 50));
+        getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 124, 30));
 
         registerButton.setText("Register");
         registerButton.setOpaque(false);
@@ -76,44 +81,60 @@ public class LoginGUI extends javax.swing.JFrame {
                 registerButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 124, 30));
+        getContentPane().add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 440, 124, 30));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Username");
         jLabel1.setToolTipText("");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 140, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 140, -1));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Password");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 320, 150, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 150, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/LogoCT copia.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 570, 270));
+        getContentPane().add(adress, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, 120, -1));
+        getContentPane().add(portText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, 120, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Port");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 490, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Adress");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/splashy.png"))); // NOI18N
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 590, 510));
+
+        loginText1.setFont(new java.awt.Font("Verdana", 0, 11)); // NOI18N
+        getContentPane().add(loginText1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, 120, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        
+
         String login = loginText.getText();
         String password = passwordText.getText();        
         String cadena = "PROTOCOLCRISTOTUBE1.0#LOGIN#"+login+"#"+password;
         
         ConnectedTransmision transmision = new ConnectedTransmision(cadena);
         transmision.thr.start();  
-        while(!transmision.connected){
+        while(transmision.connected.equals("false")){
             connectionLabel.setText("Not Connected");
         }
-        
-        connectionLabel.setText("Connected");
-        ClientGUI client = new ClientGUI(transmision);
-        client.show();
-        this.dispose();
+        if(transmision.connected.equals("true")){
+            connectionLabel.setText("Connected");
+            ClientGUI client = new ClientGUI(transmision);
+            client.show();
+            this.dispose();
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
@@ -160,14 +181,19 @@ public class LoginGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField adress;
     private javax.swing.JLabel connectionLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JButton loginButton;
     private javax.swing.JTextField loginText;
+    private javax.swing.JTextField loginText1;
     private javax.swing.JPasswordField passwordText;
+    private javax.swing.JTextField portText;
     private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
 }

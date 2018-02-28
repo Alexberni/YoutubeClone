@@ -22,17 +22,17 @@ public class ServerThread extends Thread {
     public Controller controller;
     public long onlineTime = 0;
     private ClientTimer timer;
-    private ArrayList<ServerThread> clients;
+    private CristoTubeServer server;
     public PrintWriter out2;
     public BufferedReader in2;
     public CristoTubeProtocol ctp;
     
-    public ServerThread(Socket socket, ArrayList<ServerThread> clients) {
+    public ServerThread(Socket socket, CristoTubeServer server) {
         super("ServerThread");
         this.socket = socket; 
         this.timer = new ClientTimer(this);
-        this.clients = clients;
-        this.controller = new Controller(clients);
+        this.server = server;
+        this.controller = new Controller();
         System.out.println("creando socket");
     }
     
@@ -49,7 +49,7 @@ public class ServerThread extends Thread {
             in2 = in;
             
             String inputLine, outputLine;                  
-            ctp = new CristoTubeProtocol(this.controller, this.socket);            
+            ctp = new CristoTubeProtocol(this.controller, this.socket, this.server);            
 
             while ((inputLine = in.readLine()) != null) {
                 System.out.println(inputLine);
@@ -69,7 +69,11 @@ public class ServerThread extends Thread {
         }        
             System.out.println("Transmision Correcta");
             this.timer.stop();    
-            this.clients.remove(this.clients.indexOf(this));
+        try {
+            this.server.serverDelete(this);
+        } catch (IOException ex) {
+            System.out.println("Error at deleting client thread");
+        }
             
         try {
             socket.close();

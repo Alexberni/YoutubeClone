@@ -28,7 +28,7 @@ import javax.swing.JTable;
 
 public class ConnectedTransmision implements Runnable{
     public Thread thr;
-    public Boolean connected = false;
+    public String connected = "false";
     public Boolean open = true;
     public JTable videoTable;
     private Socket kkSocket;
@@ -36,10 +36,9 @@ public class ConnectedTransmision implements Runnable{
     public String user;
     private String outPut = null;
     public Controller controller;
-    
+
     public ConnectedTransmision(String cadena){
         this.thr = new Thread(this, "connection");
-        this.connected = false;
         this.outPut = cadena;
         this.connectSocket();
         this.controller = new Controller(this);
@@ -47,7 +46,6 @@ public class ConnectedTransmision implements Runnable{
     
     public ConnectedTransmision(){
         this.thr = new Thread(this, "connection");
-        this.connected = false;
         this.connectSocket();
         this.controller = new Controller(this);
     }
@@ -85,14 +83,14 @@ public class ConnectedTransmision implements Runnable{
                         }
                         else if(((fromServerCut[1] + fromServerCut[2]).equals("OKUSER_LOGGED"))){                     
                             System.out.println("SUCCESS_Logueado");
-                            this.connected = true;
+                            this.connected = "true";
                             this.user = fromServerCut[7];
                             new File("users/" + this.user + "/videos/").mkdirs();
                             break;
                         }
                         else if(((fromServerCut[1] + fromServerCut[2]).equals("ERRORBAD_LOGIN"))){
                             System.out.println("ERROR_Fallo al loguear");
-                            this.connected = false;
+                            this.connected = "error";
                         }   
                     }  
                     
@@ -120,67 +118,6 @@ public class ConnectedTransmision implements Runnable{
                         System.out.println(fromServerCut[2]);
                         out.println("PROTOCOLCRISTOTUBE1.0#" + this.user + "#DELETE#" + fromServerCut[2] + "#BROADCASTING#OK");
                     }
-                    else if(fromServerCut[2].equals("VIDEO_FOUND")){ 
-                        out.println("PROTOCOLCRISTOTUBE1.0#OK#" + this.user + "#PREPARED_TO_RECEIVE#" + fromServerCut[4]);
-                        int length_total = Integer.parseInt(fromServerCut[4]);
-                        
-                        int length = (int) ((length_total/1024)*0.015);
-                        
-                        if (length < 500){
-                            length = 500;
-                        }
-                        else
-                            length = 500;
-                        
-                        fromServer = in.readLine();
-                        
-                        System.out.println(fromServer);
-                        
-                        fromServerCut = fromServer.split("#");
-                        byte[] bytes;
-                        byte[] total_bytes;
-                        boolean exit = true;
-                        int j = 0;
-                        File file = new File("users/" + this.user + "/videos/" + new Date().getTime()/60 + ".mp4");
-                        FileOutputStream outp = new FileOutputStream(file);
-                        //ByteArrayOutputStream output = new ByteArrayOutputStream(); 
-                        do{
-                            System.out.println(fromServer);
-                            if(!fromServerCut[3].equals("DELETE")){
-                                String encoded = fromServerCut[3];
-                                bytes = java.util.Base64.getDecoder().decode(encoded.getBytes()); 
-                                //output.write(bytes);
-                                outp.write(bytes);
-                                //System.out.println(file.length() +"   "+ length_total);
-                                if(file.length() >= length_total){
-                                    exit = false;
-                                } 
-                                else{
-                                    fromServer = in.readLine();  
-                                    fromServerCut = fromServer.split("#");
-                                }
-                                if (j == length){
-                                    ReproductorVideoGUI repro = new ReproductorVideoGUI(file);
-                                    repro.show();
-                                }
-                                j++;
-                                //this.thr.sleep(30);
-                                //total_bytes = output.toByteArray();
-                                //outp.write(total_bytes);
-                            }
-                            else{
-                                exit = false;
-                                this.controller.updateVideoTable(videos);
-                                out.println("PROTOCOLCRISTOTUBE1.0#" + this.user + "#DELETE#" + fromServerCut[2] + "#BROADCASTING#OK");
-                            }
-                        }while(exit);                                  
-                        try {      
-                            //total_bytes = output.toByteArray();
-                            //outp.write(total_bytes);
-                            outp.close();
-                            System.out.println("Video Transmitido Satisfactoriamente");
-                        } catch (Exception e) {}
-                } 
                 //}                                                                      
             }
             
@@ -243,12 +180,13 @@ public class ConnectedTransmision implements Runnable{
     }
     
     private void connectSocket(){
-        String hostName = "52.19.19.65";
+        String hostName = "localhost";//"59.19.19.65"
         int portNumber = 4444;
         try {
             this.kkSocket = new Socket(hostName, portNumber);
         } catch (IOException ex) {
             Logger.getLogger(ConnectedTransmision.class.getName()).log(Level.SEVERE, null, ex);
+            this.connected = "error";
             System.out.println("Error connection I/O " + hostName);
         }
     

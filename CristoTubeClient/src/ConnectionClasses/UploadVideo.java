@@ -89,7 +89,7 @@ public class UploadVideo implements Runnable{
     }                   
     
     private void connectSocket(){
-        String hostName = "52.19.19.65";
+        String hostName = "localhost";
         int portNumber = 4444;
         try {
             this.kkSocket = new Socket(hostName, portNumber);
