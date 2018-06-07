@@ -1,6 +1,6 @@
 # YoutubeClone
 
-Youtube clone made with Java for learning pourposes. 
+Youtube clone made with Java for learning purposes. 
 
 In this example the user can sign in, sign up, upload, download, delete, modify, and watch videos in streaming.
 This isn't a really good clone, but I learned a lot about comunications, sockets, encoding, ... so after all, was a really fun project to make.
