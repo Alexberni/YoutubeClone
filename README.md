@@ -2,7 +2,7 @@
 
 Youtube clone made with Java for learning purposes. 
 
-In this example the user can sign in, sign up, upload, download, delete, modify, and watch videos in streaming.
+In this example the user can sign in, sign up, upload, download, delete, modify, and watch videos in "streaming".
 This isn't a really good clone, but I learned a lot about comunications, sockets, encoding, ... so after all, was a really fun project to make.
 
 # How it works
@@ -16,6 +16,6 @@ Afeter the log in the user can access to watch the other users videos, or upload
 
 # Improvements
 
-This is just a learning project but, if u can make it better, you can add some security (hashing password,...) or change the streaming cause it bugs a lot. 
+This is just a learning project.
 
 
