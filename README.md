@@ -14,8 +14,7 @@ and the server will respond:  "PROTOCOLCRISTOTUBE1.0#OK#USER_LOGGED#"+logdata; (
 
 Afeter the log in the user can access to watch the other users videos, or upload his owns. For uploading or watching a video, I used BASE64 and cutted it in packets (following the standart: "PROTOCOLCRISTOTUBE1.0#OK#"+videoID+"#" + encodedString)
 
-# Improvements
-
+# 
 This is just a learning project.
 
 
