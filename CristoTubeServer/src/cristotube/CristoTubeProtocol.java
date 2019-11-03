@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cristotube;
 
 import Models.Usuario;
@@ -67,7 +62,7 @@ public class CristoTubeProtocol {
             
             else if(parts[2].equals("GETVIDEO")){
                 this.currentUser = this.controller.getCurrentUser(parts[1]);
-                theOutput = "vacio"; //Esto es solo para mi, no se envia.
+                theOutput = "vacio"; 
                 String path = this.controller.getVideo(Integer.parseInt(parts[3]));
                 
                 File tempFile = new File(path);
@@ -114,7 +109,6 @@ public class CristoTubeProtocol {
                 FileOutputStream outp = new FileOutputStream(file);
                 ByteArrayOutputStream output = new ByteArrayOutputStream(); 
                           
-                //theInput = in.readLine();
                 System.out.println(theInput);    
                 
                 while((theInput = in.readLine()) != null && exit){
@@ -128,8 +122,6 @@ public class CristoTubeProtocol {
                         exit = false;
                     } 
                     else{
-                        //theInput = in.readLine();  
-                        //parts2 = theInput.split("#");
                     }
                 }                              
                 try {      
