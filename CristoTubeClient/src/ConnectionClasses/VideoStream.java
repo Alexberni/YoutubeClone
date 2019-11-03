@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ConnectionClasses;
 
 import Controllers.Controller;
@@ -72,7 +67,6 @@ public class VideoStream implements Runnable{
             while((fromServer = in.readLine()) != null){ //(fromServer = in.readLine()) != null
                 System.out.println("Server: " + fromServer);
                 String[] fromServerCut = fromServer.split("#");
-                //if(fromServerCut[0].equals("PROTOCOLCRISTOTUBE1.0")){                                 
                     if(((fromServerCut[1].equals("GET_ALL_RESPONSE")))){                     
                         this.videos = controller.parseVideos(fromServer);
                         controller.updateVideoTable(videos);
@@ -110,15 +104,12 @@ public class VideoStream implements Runnable{
                             int j = 0;
                             File file = new File("users/" + this.user + "/videos/" + new Date().getTime()/60 + ".mp4");
                             FileOutputStream outp = new FileOutputStream(file);
-                            //ByteArrayOutputStream output = new ByteArrayOutputStream(); 
                             do{
                                 System.out.println(fromServer);
                                 if(!fromServerCut[3].equals("DELETE")){
                                     String encoded = fromServerCut[3];
                                     bytes = java.util.Base64.getDecoder().decode(encoded.getBytes()); 
-                                    //output.write(bytes);
                                     outp.write(bytes);
-                                    //System.out.println(file.length() +"   "+ length_total);
                                     if(file.length() >= length_total){
                                         exit = false;
                                     } 
@@ -131,9 +122,6 @@ public class VideoStream implements Runnable{
                                         repro.show();
                                     }
                                     j++;
-                                    //this.thr.sleep(30);
-                                    //total_bytes = output.toByteArray();
-                                    //outp.write(total_bytes);
                                 }
                                 else{
                                     exit = false;
@@ -142,8 +130,6 @@ public class VideoStream implements Runnable{
                                 }
                                 }while(exit);                                  
                             try {      
-                                //total_bytes = output.toByteArray();
-                                //outp.write(total_bytes);
                                 outp.close();
                                 System.out.println("Video Transmitido Satisfactoriamente");
                             } catch (Exception e) {}
@@ -176,8 +162,8 @@ public class VideoStream implements Runnable{
     }
     
     private void connectSocket(){
-        String hostName = "59.19.19.65";
-        int portNumber = 4444;
+        String hostName = "address";
+        int portNumber = 0000;
         try {
             this.kkSocket = new Socket(hostName, portNumber);
         } catch (IOException ex) {
