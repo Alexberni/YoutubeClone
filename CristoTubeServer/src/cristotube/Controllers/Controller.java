@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cristotube.Controllers;
 
 import Interfaces.MysqlConn;
@@ -22,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author admin
+ * @author Alex Benavides
  */
 public class Controller {
     private Connection conn;
@@ -69,7 +64,6 @@ public class Controller {
             this.conn = MysqlConn.getConn();
             stmt = conn.createStatement();
         
-            //PreparedStatement pps=conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
            
             while(rs.next()){              
@@ -83,7 +77,6 @@ public class Controller {
                     this.logedData[3] = rs.getString("lastname2");
                     this.logedData[4] = first;
                     this.user = new Usuario(Integer.parseInt(rs.getString("id")), this.logedData[0], this.logedData[1], this.logedData[2], this.logedData[3], this.logedData[4], last);
-                    //System.out.println(this.user.getLogin());
                 }
             }
             this.conn.close();            
@@ -166,7 +159,6 @@ public class Controller {
             this.conn = MysqlConn.getConn();
             stmt = conn.createStatement();
         
-            //PreparedStatement pps=conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);
            
             while(rs.next()){              
@@ -187,7 +179,6 @@ public class Controller {
             this.conn = MysqlConn.getConn();
             stmt = conn.createStatement();
         
-            //PreparedStatement pps=conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery(query);       
             rs.next();
             String first = rs.getString("login");
@@ -198,7 +189,6 @@ public class Controller {
                     this.logedData[3] = rs.getString("lastname2");
                     this.logedData[4] = first;
                     this.user = new Usuario(Integer.parseInt(rs.getString("id")), this.logedData[0], this.logedData[1], this.logedData[2], this.logedData[3], this.logedData[4], last);
-                    //System.out.println(this.user.getLogin());                     
             this.conn.close();            
         
         }catch (SQLException ex) {
