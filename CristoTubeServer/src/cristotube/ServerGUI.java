@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cristotube;
 
 import NormalClasses.TextAreaOutPutStream;
@@ -11,7 +6,7 @@ import java.io.PrintStream;
 
 /**
  *
- * @author admin
+ * @author Alex Benavides
  */
 public class ServerGUI extends javax.swing.JFrame {
     private PrintStream out;
@@ -120,29 +115,6 @@ public class ServerGUI extends javax.swing.JFrame {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         
-       /* final SwingWorker worker = new SwingWorker(){
-            @Override
-            protected Object doInBackground() throws Exception {
-                this.serverUP();
-                return null;
-            }  
-            
-            private void serverUP() {
-                boolean listening = true;
-                ServerThread newConnection;
-                try (ServerSocket serverSocket = new ServerSocket(Integer.parseInt(portText.getText()))) { 
-                    while (listening) {
-                            newConnection = new ServerThread(serverSocket.accept());
-                            newConnection.start();
-                        }
-                    } catch (IOException e) {
-                    System.err.println("Could not listen on port " + portText.getText());
-                    System.exit(-1);
-                }
-            }
-        };
-        worker.execute();
-        */
        newServer = new CristoTubeServer(Integer.parseInt(portText.getText()));
        newServer.start();
        LogDataThread updateTable = new LogDataThread(this.jTable1, this.newServer.clients);
