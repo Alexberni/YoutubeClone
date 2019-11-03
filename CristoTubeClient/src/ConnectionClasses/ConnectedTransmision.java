@@ -1,10 +1,5 @@
 package ConnectionClasses;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import Controllers.Controller;
 import Models.Video;
 import GUIs.ReproductorVideoGUI;
@@ -100,10 +95,9 @@ public class ConnectedTransmision implements Runnable{
             out.println("PROTOCOLCRISTOTUBE1.0#"+ this.user + " #GET_ALL");
             
             //Post Login
-            while((fromServer = in.readLine()) != null){ //(fromServer = in.readLine()) != null
+            while((fromServer = in.readLine()) != null){
                 System.out.println("Server: " + fromServer);
                 String[] fromServerCut = fromServer.split("#");
-                //if(fromServerCut[0].equals("PROTOCOLCRISTOTUBE1.0")){                                 
                     if(((fromServerCut[1].equals("GET_ALL_RESPONSE")))){                     
                         this.videos = controller.parseVideos(fromServer);
                         controller.updateVideoTable(videos);
@@ -149,7 +143,6 @@ public class ConnectedTransmision implements Runnable{
             BufferedReader in = new BufferedReader(
             new InputStreamReader(kkSocket.getInputStream()));
             out.println("PROTOCOLCRISTOTUBE1.0#VIDEO_UP#" + total_size + "#" + 1024 + "#METADATOS_VIDEO#" + this.user + "#"+ video.getTitle() + "#" + video.getDesc());           
-            //String fromServer = in.readLine();           
             String encodedString = null;
             InputStream inputStream = null;
             try {
@@ -180,8 +173,8 @@ public class ConnectedTransmision implements Runnable{
     }
     
     private void connectSocket(){
-        String hostName = "59.19.19.65";//"59.19.19.65"
-        int portNumber = 4444;
+        String hostName = "address";//"59.19.19.65"
+        int portNumber = 0000;
         try {
             this.kkSocket = new Socket(hostName, portNumber);
         } catch (IOException ex) {
