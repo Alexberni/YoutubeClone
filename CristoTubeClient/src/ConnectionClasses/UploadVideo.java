@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ConnectionClasses;
 
 import Controllers.Controller;
@@ -57,8 +52,7 @@ public class UploadVideo implements Runnable{
             PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(
             new InputStreamReader(kkSocket.getInputStream()));
-            out.println("PROTOCOLCRISTOTUBE1.0#VIDEO_UP#" + total_size + "#" + 1024 + "#METADATOS_VIDEO#" + this.user + "#"+ video.getTitle() + "#" + video.getDesc());           
-            //String fromServer = in.readLine();           
+            out.println("PROTOCOLCRISTOTUBE1.0#VIDEO_UP#" + total_size + "#" + 1024 + "#METADATOS_VIDEO#" + this.user + "#"+ video.getTitle() + "#" + video.getDesc());                      
             String encodedString = null;
             InputStream inputStream = null;
             try {
