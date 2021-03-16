@@ -1,7 +1,7 @@
 **OLD
-# YoutubeClone
+# Video Streaming Test
 
-Youtube clone made with Java for learning purposes. 
+Video Streaming made with Java for learning purposes. 
 
 In this example the user can sign in, sign up, upload, download, delete, modify, and watch videos in "streaming".
 This isn't a really good clone, but I learned a lot about comunications, sockets, encoding, ... so after all, was a really fun project to make.
@@ -15,7 +15,6 @@ and the server will respond:  "PROTOCOLCRISTOTUBE1.0#OK#USER_LOGGED#"+logdata; (
 
 Afeter the log in the user can access to watch the other users videos, or upload his owns. For uploading or watching a video, I used BASE64 and cutted it in packets (following the standart: "PROTOCOLCRISTOTUBE1.0#OK#"+videoID+"#" + encodedString)
 
-# 
-This is just a learning project.
+# This is just a learning project.
 
 
