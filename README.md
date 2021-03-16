@@ -17,4 +17,6 @@ Afeter the log in the user can access to watch the other users videos, or upload
 
 # This is just a learning project.
 
-
+# TODO
+  Better user management
+  Control memory usage
